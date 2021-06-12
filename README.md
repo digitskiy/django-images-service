@@ -12,8 +12,8 @@
 1. git clone <https://github.com/IniSlice/django-images-service.git>
 2. Установить виртуальное окружение: $ python -m venv myenv
 3. Активировать виртуальное окружение:
-- для Windows $ myenv\Scripts\activate
-- для Linux $ source myenv/bin/activate
+для Windows $ myenv\Scripts\activate
+для Linux $ source myenv/bin/activate
 5. Установить зависимости: (myenv) $ pip install -r requirements.txt
 6. Провести миграции: (myenv) $ python manage.py makemigrations, $ python manage.py migrate
 7. Запустить локальный сервер Django: (myenv) $ python manage.py runserver
