@@ -1,0 +1,28 @@
+{% extends 'image_service/base_image_service.html' %}
+
+{% block title %}
+  Image Edit - {{ image.title }}
+{% endblock %}
+
+{% block content %}
+  <p>
+    <a href="{% url 'images_list_url' %}">Назад к списку</a>
+  </p>
+  <h2>{{ image.title }}</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+      {{ form.as_p }}
+    </div>
+    <button type="submit">Отправить</button>
+    {% if image.image_file_resized %}
+      <p>
+        <img src="{{ image.image_file_resized.url }}">
+      </p>
+    {% else %}
+      <p>
+        <img src="{{ image.image_file.url }}">
+      </p>
+    {% endif %}
+  </form>
+{% endblock %}

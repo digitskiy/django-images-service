@@ -1,0 +1,29 @@
+{% extends 'image_service/base_image_service.html' %}
+
+{% block title %}
+  Images List
+{% endblock %}
+
+{% block content %}
+  <h1>Список изображений</h1>
+  <form method="GET" enctype="multipart/form-data">
+    {% if not images %}
+      <p>Нет доступных изображений</p>
+    {% endif %}
+    <ul>
+      {% for image in images %}
+        <li>
+          <a href="{{ image.get_absolute_url }}">{{ image.title}}</a>
+          <small>(Дата и время загрузки: {{ image.date_upload }})</small>
+          <small>Оригинальный размер: {{ image.image_file.width }}x{{ image.image_file.height }}</small>
+          {% if image.image_file_resized %}
+            <small>Измененный размер: {{ image.image_file_resized.width }}x{{ image.image_file_resized.height }}</small>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </form>
+  <p>
+    <a href="{% url 'image_upload_url' %}">Добавить изображение</a>
+  </p>
+{% endblock %}
