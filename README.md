@@ -1,19 +1,19 @@
 # django-images-service
-Веб-сервис Django для загрузки изображений и изменения их размеров
+Django web service for loading images and resizing them 
 
-Данный веб-сервис позволяет:
-- Загружать изображения с компьютера пользователя или по URL
-- Изменять размер изображений
-- Сохранять как оригинальные, так и измененные изображения в базу данных
-- Просматривать список изображений с основной информацией
+This web service allows:
+- Upload images from the user's computer or by URL
+- Resize images
+- Save both original and modified images to the database
+- Viewing a list of images with basic information
 
 
-## Установка
+## Installation
 1. git clone <https://github.com/IniSlice/django-images-service.git>
-2. Установить виртуальное окружение: $ python -m venv myenv
-3. Активировать виртуальное окружение:
-для Windows $ myenv\Scripts\activate
-для Linux $ source myenv/bin/activate
-5. Установить зависимости: (myenv) $ pip install -r requirements.txt
-6. Провести миграции: (myenv) $ python manage.py makemigrations, $ python manage.py migrate
-7. Запустить локальный сервер Django: (myenv) $ python manage.py runserver
+2. Install virtual environment: $ python -m venv myenv
+3. Activate virtual environment:
+for Windows $ myenv\Scripts\activate
+for Linux $ source myenv/bin/activate
+5. Install requirements: (myenv) $ pip install -r requirements.txt
+6. Run all migrations: (myenv) $ python manage.py makemigrations, $ python manage.py migrate
+7. Start local server Django: (myenv) $ python manage.py runserver
