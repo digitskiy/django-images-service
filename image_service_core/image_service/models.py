@@ -13,19 +13,19 @@ from django.core.files.storage import FileSystemStorage
 
 
 class OverwriteStorage(FileSystemStorage):
-    """ Перезапись измененного файла изображения в случае, если такой файл уже есть """
+    """ Overwriting a modified image file in case such a file already exists """
     def get_available_name(self, name, *args, **kwargs):
         self.delete(name)
         return name
 
 def validate_image_url(url):
-    """ Валидатор для проверки наличия файла изображения в URL ссылке """
-    # Делаем запрос и по заголовку 'Content-Type' проверяем тип содержимого ответного пейлоада
+    """ Validator to check if an image file exists in a URL link """
+    # Execute the request and check the content type of the response payload using the 'Content-Type' header
     with requests.get(url, stream=True) as response:
         content_type = response.headers.get('Content-Type')
         if content_type and content_type.split('/')[0] != 'image':
             raise ValidationError("Данная ссылка не содержит изображения!")
-    # Пытаемся открыть файл, чтобы удостоверится в том, что это действительно изображение
+    # Trying to open a file to make sure it's a real image
         img_file = ContentFile(response.content)
         try:
             with Img.open(img_file) as img:
@@ -67,11 +67,11 @@ class Image(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        """ Генерация ссылки на конктетнное изображение """
+        """ Generating a link to a specific image """
         return reverse('image_edit_url', kwargs={'title': self.title})
 
     def get_remote_image(self):
-        """ Загрузка файла изображения полученного по ссылке """
+        """ Downloading the image file received from the link """
         try:
             response = requests.get(self.image_url)
             response.raise_for_status()
@@ -83,23 +83,23 @@ class Image(models.Model):
             return response
     
     def save_remote_image(self):
-        """ Сохранение файла изображения полученного по ссылке """
+        """ Saving an image file received from a link """
         if self.image_url and not self.image_file:
             fname = os.path.basename(self.image_url)
             resp = self.get_remote_image()
             self.image_file.save(fname, ContentFile(resp.content), save=False)
     
     def resize_image(self):
-        """ Изменение размеров изображения и сохранении измененной копии """
-        # Определяем пути и названия файла
+        """ Resizing an image and saving a resized copy """
+        # Determine the path and name of the file
         fname, _ext = os.path.splitext(self.title)
         fcopy = f"{fname}_copy{_ext}"
         image = self.image_file
-        # Определяем рамеры изображения
+        # Determining the dimensions of the image
         width = self.width or self.height
         height = self.height or self.width
         size = (width, height)
-        #Открываем файл по старому пути, изменяем размер и сохраняем по новому пути
+        # Open file in old path, resize and save in new path
         try:
             with Img.open(image) as img:
                 img.thumbnail(size, Img.ANTIALIAS)
@@ -113,20 +113,20 @@ class Image(models.Model):
             print("Файл с изображением не найден!")        
 
     def save(self, *args, **kwargs):
-        # Если объекта ещё нет в БД
+        # If the object is not yet in the database
         if not self.id:
-            # Если атрибут title ещё не определен, то определяем в зависимости откуда было загружено изображение
+            # If the title attribute is not yet defined, then we determine depending on where the image was loaded from
             if not self.title:
                 self.title = self.image_file.name or os.path.basename(self.image_url)  
             self.save_remote_image() 
-            # Если один из атрибутов ширины и/или высоты не заполнен, то присваевыем ширину и высоту исходного изображения
+            # If one of the width and/or height attributes is empty, then assign the width and height of the original image
             if not self.width:
                 self.width = self.image_file.width
             if not self.height:
                 self.height = self.image_file.height        
         else:
             self.resize_image()
-            # Свойствам ширины и высоты присваевыем ширину и высоту измененного изображения
+            # Assign the width and height of the resized image to the width and height properties
             self.width = self.image_file_resized.width
             self.height = self.image_file_resized.height
         super(Image, self).save(*args, **kwargs)
