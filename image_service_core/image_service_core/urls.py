@@ -27,5 +27,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('images/', include('image_service.urls')),
 ]
-# Добавляем URL-шаблон для обслуживания медиафайлов
+# Adding a URL template to serve media files
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
