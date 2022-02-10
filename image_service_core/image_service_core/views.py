@@ -1,7 +1,7 @@
-# Импортируем функцию для перенаправления запросов
+# Importing a function to redirect requests
 from django.shortcuts import redirect
 
-# Функция обработчик для перенаправления запроса с главной страницы на страницу с изображениемя '/images'
+# Handler function to redirect the request from the main page to the page with the image '/images'
 def redirect_images(request):
-    # permanent=True - постоянный редирект 
+    # permanent=True - permanent redirect 
     return redirect('images_list_url', permanent=True)
