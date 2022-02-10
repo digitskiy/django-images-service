@@ -16,10 +16,10 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Основной URL для управления медиафайлами
+# Main URL for managing media files
 MEDIA_URL = '/media/'
 
-# Путь к каталогу, в котором хранятся файлы изображений, загруженные пользователем
+# Path to the directory where the image files uploaded by the user are stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Quick-start development settings - unsuitable for production
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'image_service',#Подлючаем наше приложение
+    # Connect our application
+    'image_service',
 ]
 
 MIDDLEWARE = [
@@ -125,7 +126,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-# путь по умолчанию, для хранения статических файлов, для приложений Django
+# Default path to store static files for Django applications
 STATIC_URL = '/static/'
 
 # Default primary key field type
