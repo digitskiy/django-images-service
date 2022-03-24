@@ -9,7 +9,7 @@ This web service allows:
 
 
 ## Installation
-1. git clone <https://github.com/IniSlice/django-images-service.git>
+1. git clone <https://github.com/digitskiy/django-images-service.git>
 2. Install virtual environment: $ python -m venv myenv
 3. Activate virtual environment:
 for Windows $ myenv\Scripts\activate
